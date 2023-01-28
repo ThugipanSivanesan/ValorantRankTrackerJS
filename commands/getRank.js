@@ -29,7 +29,7 @@ module.exports = {
                 ["Date", jsonResult.data[0].date],
             ]);
 
-            await interaction.reply(
+            await interaction.deferReply(
                 'Name: ' + parsedResult.get("Name") + '\n' +
                 'Tag: ' + parsedResult.get("Tag") + '\n' +
                 'Current Rank: ' + parsedResult.get("Current Rank") + '\n' +
@@ -39,10 +39,10 @@ module.exports = {
             );
         } catch (e) {
             if (e instanceof SyntaxError) {
-                await interaction.reply({ content: e.message, ephemeral: true });
+                await interaction.deferReply({ content: e.message, ephemeral: true });
             }
             else {
-                await interaction.reply({ content: 'Something went wrong.', ephemeral: true });
+                await interaction.deferReply({ content: 'Something went wrong.', ephemeral: true });
             }
 
         }
