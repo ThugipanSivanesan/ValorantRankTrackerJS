@@ -4,10 +4,16 @@ const { request } = require("undici");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('getrank')
-        .setDescription('gets elifs rank'),
+        .setDescription('Gets the current rank of a player')
+        .addStringOption(option =>
+            option.setName('input')
+                .setDescription('e.g: myname#1234#eu')
+                .setRequired(true)),
     async execute(interaction) {
         try {
-            const api = await request('https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/eliif/1312');
+            const nameTagLocation = interaction.options.getString('input');
+            const splitNameTagLocation = nameTagLocation.split("#");
+            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`); // https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/eliif/1312
             const jsonResult = await api.body.json();
             const parsedResult = new Map([
                 ["Name", jsonResult.name],
@@ -17,7 +23,7 @@ module.exports = {
                 ["RR", jsonResult.data[0].elo],
                 ["Date", jsonResult.data[0].date],
             ]);
-            interaction.reply(
+            await interaction.reply(
                 'Name: ' + parsedResult.get("Name") + '\n' +
                 'Tag: ' + parsedResult.get("Tag") + '\n' +
                 'Current Rank: ' + parsedResult.get("Current Rank") + '\n' +
