@@ -29,20 +29,24 @@ module.exports = {
                 ["Date", jsonResult.data[0].date],
             ]);
 
-            await interaction.reply(
-                'Name: ' + parsedResult.get("Name") + '\n' +
-                'Tag: ' + parsedResult.get("Tag") + '\n' +
-                'Current Rank: ' + parsedResult.get("Current Rank") + '\n' +
-                'RR won/lost: ' + parsedResult.get("RR won/lost") + '\n' +
-                'Current RR: ' + parsedResult.get("RR") + '\n' +
-                'Date: ' + parsedResult.get("Date") + '\n'
-            );
+            await interaction.deferReply({ ephemeral: false });
+            await interaction.editReply({
+                content:
+                    'Name: ' + parsedResult.get("Name") + '\n' +
+                    'Tag: ' + parsedResult.get("Tag") + '\n' +
+                    'Current Rank: ' + parsedResult.get("Current Rank") + '\n' +
+                    'RR won/lost: ' + parsedResult.get("RR won/lost") + '\n' +
+                    'Current RR: ' + parsedResult.get("RR") + '\n' +
+                    'Date: ' + parsedResult.get("Date") + '\n'
+            });
         } catch (e) {
             if (e instanceof SyntaxError) {
-                await interaction.reply({ content: e.message, ephemeral: true });
+                await interaction.deferReply({ ephemeral: true });
+                await interaction.editReply({ content: e.message });
             }
             else {
-                await interaction.reply({ content: 'Something went wrong.', ephemeral: true });
+                await interaction.deferReply({ ephemeral: true });
+                await interaction.editReply({ content: 'Something went wrong!' });
             }
 
         }
