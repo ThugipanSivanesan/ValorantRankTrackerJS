@@ -15,8 +15,8 @@ module.exports = {
             const splitNameTagLocation = nameTagLocation.split("#");
             const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`);
 
-            if (api.statusCode != 200) {
-                throw new SyntaxError('Incorrect Data: Check if you spelled everything correctly!');
+            if (api.statusCode == 404) {
+                throw new SyntaxError('Player not found: Check if you spelled everything correctly!');
             }
             const jsonResult = await api.body.json();
 
@@ -38,9 +38,14 @@ module.exports = {
                 'Date: ' + parsedResult.get("Date") + '\n'
             );
         } catch (e) {
-            await interaction.reply({ content: e.message, ephemeral: true });
-        }
+            if (e instanceof SyntaxError) {
+                await interaction.reply({ content: e.message, ephemeral: true });
+            }
+            else {
+                await interaction.reply({ content: 'Something went wrong.', ephemeral: true });
+            }
 
+        }
 
     },
 };
