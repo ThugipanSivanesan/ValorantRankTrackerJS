@@ -39,8 +39,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-		await interaction.deferReply({ ephemeral: true });
-		await interaction.editReply({ content: 'There was an error while executing this command!' });
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,13 +8,13 @@ module.exports = {
         .setDescription('gets the current rank of a player')
         .addStringOption(option =>
             option.setName('input')
-                .setDescription('e.g: myname#1234#eu')
+                .setDescription('e.g: myname#1234')
                 .setRequired(true)),
     async execute(interaction) {
         try {
-            const nameTagLocation = interaction.options.getString('input');
-            const splitNameTagLocation = nameTagLocation.split('#');
-            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`);
+            const nameTag = interaction.options.getString('input');
+            const splitNameTag = nameTag.split('#');
+            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/${splitNameTag[0]}/${splitNameTag[1]}`);
 
             if (api.statusCode == 404) {
                 throw new SyntaxError('Player not found: Check if you spelled everything correctly!');
@@ -30,6 +31,7 @@ module.exports = {
             ]);
 
             await interaction.deferReply({ ephemeral: true });
+            await wait(1200);
             await interaction.editReply({
                 content:
                     'Name: ' + parsedResult.get('Name') + '\n' +
@@ -41,12 +43,10 @@ module.exports = {
             });
         } catch (e) {
             if (e instanceof SyntaxError) {
-                await interaction.deferReply({ ephemeral: true });
-                await interaction.editReply({ content: e.message });
+                await interaction.reply({ content: e.message, ephemeral: true });
             }
             else {
-                await interaction.deferReply({ ephemeral: true });
-                await interaction.editReply({ content: 'Something went wrong...' })
+                await interaction.reply({ content: 'Something went wrong...', ephemeral: true });
             }
 
         }
