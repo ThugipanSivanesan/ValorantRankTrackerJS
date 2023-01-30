@@ -8,13 +8,13 @@ module.exports = {
         .setDescription('gets the current rank of a player')
         .addStringOption(option =>
             option.setName('input')
-                .setDescription('e.g: myname#1234')
+                .setDescription('e.g: myname#1234#eu')
                 .setRequired(true)),
     async execute(interaction) {
         try {
-            const nameTag = interaction.options.getString('input');
-            const splitNameTag = nameTag.split('#');
-            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/${splitNameTag[0]}/${splitNameTag[1]}`);
+            const nameTagLocation = interaction.options.getString('input');
+            const splitNameTagLocation = nameTagLocation.split('#');
+            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`);
 
             if (api.statusCode == 404) {
                 throw new SyntaxError('Player not found: Check if you spelled everything correctly!');
