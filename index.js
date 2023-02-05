@@ -1,5 +1,14 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const {
+
+	Client,
+	Events,
+	GatewayIntentBits,
+	Collection,
+	ActivityType,
+
+} = require('discord.js');
+
 const { token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -23,6 +32,9 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+	client.user.setStatus('dnd');
+	client.user.setActivity('bot update', { type: ActivityType.Playing });
+	client.user.setAvatar('./pictures/logo.jpg');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
