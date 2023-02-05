@@ -1,0 +1,41 @@
+# ValorantRankTrackerJS
+
+A Discord Bot using the unofficial VALORANT API to get a players rank
+
+# Before using this bot
+
+Please make sure to check out the [repository](https://github.com/Henrik-3/unofficial-valorant-api) for the API written by [Henrik-3](https://github.com/Henrik-3)
+<br>
+Everything about the API, used by this bot, can be found there.
+
+# Preparations
+
+The bot needs a `config.json` file. Create one in the root folder with this format:
+
+```json
+{
+  "token": "Your-Token",
+  "clientId": "Your-Client-ID",
+  "guildId": "Your-Server-ID"
+}
+```
+
+`token` and `clientId` can be found in Discord Developer Portal in your [Applications](https://discord.com/developers/applications).
+
+# Installation
+
+**Make sure you have Docker installed.**
+
+Build the Docker-file
+
+```bash
+docker build -t valorantranktrackerjs:v1.0.0-stable .
+```
+
+Run the Docker-file
+
+```bash
+docker run -d -t --name valorantranktracker docker.io/library/valorantranktrackerjs:v1.0.0-stable
+```
+
+Everything should be working and the bot will be online in your server.
