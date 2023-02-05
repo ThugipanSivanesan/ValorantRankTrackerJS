@@ -18,7 +18,8 @@ The bot needs a `config.json` file. Create one in the root folder with this form
 }
 ```
 
-Enable Developer Mode in your Discord settings.
+**IMPORTANT: Enable Developer Mode in your Discord settings.**
+
 `token` and `clientId` can be found in Discord Developer Portal in your [Applications](https://discord.com/developers/applications). For your `guildId` you can find it by right-clicking on your server name.
 
 # Installation
