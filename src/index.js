@@ -9,7 +9,7 @@ const {
 
 } = require('discord.js');
 
-const { token } = require('./config.json');
+const { token } = require('../config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -34,7 +34,7 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 	client.user.setStatus('dnd');
 	client.user.setActivity('update', { type: ActivityType.Playing });
-	client.user.setAvatar('./images/logo.jpg');
+	client.user.setAvatar('./src/images/logo.jpg');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
