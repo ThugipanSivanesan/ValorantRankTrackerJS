@@ -29,7 +29,7 @@ module.exports = {
             ]);
 
             await interaction.deferReply({ ephemeral: true });
-            await wait(2500);
+            await wait(4000);
             await interaction.editReply({
                 content:
                     'Name: ' + parsedResult.get('Name') + '\n' +
