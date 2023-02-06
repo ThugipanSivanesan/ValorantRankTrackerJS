@@ -1,6 +1,6 @@
 # ValorantRankTrackerJS
 
-A Discord Bot using the unofficial VALORANT API to get a players rank
+A Discord Bot using the unofficial VALORANT API to get a players last competetive match result and his current rank.
 
 # Before using this bot
 
