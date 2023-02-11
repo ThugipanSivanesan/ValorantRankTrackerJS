@@ -33,7 +33,7 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 	c.user.setStatus('online');
 	c.user.setActivity('/rank', { type: ActivityType.Playing });
-	c.user.setAvatar('./images/logo.jpg');
+	c.user.setAvatar('./src/images/logo.jpg');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
