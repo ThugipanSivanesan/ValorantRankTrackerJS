@@ -1,4 +1,3 @@
-// Require the necessary discord.js classes
 const {
 
 	Client,
@@ -32,9 +31,9 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
-	client.user.setStatus('online');
-	client.user.setActivity('/rank', { type: ActivityType.Playing });
-	client.user.setAvatar('./src/images/logo.jpg');
+	c.user.setStatus('dnd');
+	c.user.setActivity('Update', { type: ActivityType.Playing });
+	c.user.setAvatar('./images/logo.jpg');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
