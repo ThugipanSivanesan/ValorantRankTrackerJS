@@ -29,13 +29,13 @@ The bot needs a `config.json` file. Create one in the root folder with this form
 Build the Docker-file
 
 ```bash
-docker build -t valorantranktrackerjs:v1.0.0-stable .
+docker build -t valorantranktrackerjs .
 ```
 
 Run the Docker-file
 
 ```bash
-docker run -d -t --name valorantranktracker valorantranktrackerjs:v1.0.0-stable
+docker run -d -t --name valorantranktracker valorantranktrackerjs
 ```
 
 If Docker gives you a permission error, then run all commands with the `sudo` keyword.
