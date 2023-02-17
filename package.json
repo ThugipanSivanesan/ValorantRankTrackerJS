@@ -10,8 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^3.2.4",
-    "async-es": "^3.2.4",
     "discord.js": "^14.7.1",
     "undici": "^5.16.0"
   }
