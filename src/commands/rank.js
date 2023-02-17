@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
-const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,6 +11,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {
         try {
+            await interaction.deferReply({ ephemeral: true });
             const nameTagLocation = interaction.options.getString('input');
             const splitNameTagLocation = nameTagLocation.split('#');
             const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`);
@@ -28,8 +28,6 @@ module.exports = {
                 ['Date', jsonResult.data[0].date],
             ]);
 
-            await interaction.deferReply({ ephemeral: true });
-            await wait(4000);
             await interaction.editReply({
                 content:
                     'Name: ' + parsedResult.get('Name') + '\n' +
