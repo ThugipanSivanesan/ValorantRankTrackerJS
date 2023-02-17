@@ -33,7 +33,7 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 	c.user.setStatus('dnd');
 	c.user.setActivity('Update', { type: ActivityType.Playing });
-	c.user.setAvatar('./src/images/logo.jpg');
+	c.user.setAvatar('./images/logo.jpg');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
