@@ -8,4 +8,8 @@ RUN npm install
 
 COPY . .
 
-CMD [ "node", "src/","index.js" ]
+WORKDIR /ValorantRankTrackerJS/src
+
+RUN npm deploy-commands.js
+
+CMD [ "node", "index.js" ]
