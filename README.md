@@ -14,7 +14,7 @@ A Discord Bot using the unofficial VALORANT API to get a players last competetiv
 - [Known issues](#known-issues)
   - [DiscordAPIError[5001]: Missing Access](#discordapierror-5001-missing-access)
 - [Support](#support)
-
+<br></br>
 # <a name="before-using-this-bot"></a> Before using this bot
 
 Please make sure to check out the [repository](https://github.com/Henrik-3/unofficial-valorant-api) for the API written by [Henrik-3](https://github.com/Henrik-3). Everything about the API, used by this bot, can be found there.
@@ -76,9 +76,7 @@ Run the bot
 ```bash
 node index.js
 ```
-
 <br></br>
-
 # <a name="docker"></a> Docker
 
 **Make sure you have Docker installed!**
@@ -111,14 +109,12 @@ Solution: Go to [Developer Applications](https://discord.com/developers/applicat
 <img src="https://discord-py-slash-command.readthedocs.io/en/legacy/_images/scope.jpg">
 
 <br></br>
-
 Also check if your bot needs "Privileged Gateway Intents"
 
 <img src="https://discordpy.readthedocs.io/en/stable/_images/discord_privileged_intents.png">
 <br></br>
 
 # <a name="support"></a> Support
-
 Feel free to contact me if you need any help.
 
 Discord: CriesInPoor#3281
