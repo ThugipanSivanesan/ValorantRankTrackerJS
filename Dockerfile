@@ -10,6 +10,6 @@ COPY . .
 
 WORKDIR /ValorantRankTrackerJS/src
 
-RUN npm deploy-commands.js
+RUN node deploy-commands.js
 
 CMD [ "node", "index.js" ]
