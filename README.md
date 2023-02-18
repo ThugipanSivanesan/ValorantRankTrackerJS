@@ -18,14 +18,14 @@ A Discord Bot using the unofficial VALORANT API to get a players last competetiv
 # <a name="before-using-this-bot"></a> Before using this bot
 
 Please make sure to check out the [repository](https://github.com/Henrik-3/unofficial-valorant-api) for the API written by [Henrik-3](https://github.com/Henrik-3). Everything about the API, used by this bot, can be found there.
-**Also fork the repository!**
+**Also [fork](https://github.com/ThugipanSivanesan/ValorantRankTrackerJS/fork) this repository!**
 <br></br>
 
 # <a name="contribution"></a> Contribution
 
 You have ideas to improve the bot or maybe just make your own version of it?
 
-Just fork the repository and experiment with it. Even consider creating a pull request.
+Just [fork](https://github.com/ThugipanSivanesan/ValorantRankTrackerJS/fork) this repository and experiment with it. Even consider creating a pull request.
 <br></br>
 
 # <a name="preparations"></a> Preparations
