@@ -31,8 +31,8 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
-	c.user.setStatus('dnd');
-	c.user.setActivity('update', { type: ActivityType.Playing });
+	c.user.setStatus('online');
+	c.user.setActivity('/rank', { type: ActivityType.Playing });
 	c.user.setAvatar('./images/logo.jpg');
 });
 
