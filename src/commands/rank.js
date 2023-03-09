@@ -39,10 +39,10 @@ module.exports = {
             });
         } catch (e) {
             if (e instanceof SyntaxError) {
-                await interaction.reply({ content: e.message, ephemeral: true });
+                await interaction.editReply({ content: e.message, ephemeral: true });
             }
             else {
-                await interaction.reply({ content: 'Something went wrong...', ephemeral: true });
+                await interaction.editReply({ content: 'Something went wrong...', ephemeral: true });
             }
 
         }
