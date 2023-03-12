@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
-const { dashLogger } = require("./logger");
+const { dashLogger } = require("../logger");
 
 module.exports = {
     data: new SlashCommandBuilder()
