@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
+const { dashLogger } = require("./logger");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -42,6 +43,7 @@ module.exports = {
                 await interaction.editReply({ content: e.message, ephemeral: true });
             }
             else {
+                dashLogger.error(`Error : ${e.message}`);
                 await interaction.editReply({ content: 'Something went wrong...', ephemeral: true });
             }
 
