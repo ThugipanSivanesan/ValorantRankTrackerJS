@@ -18,3 +18,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    # Stay on the Node LTS line (24.x); don't jump to Current (26+).
+    # Still receives minor/patch bumps within the pinned major.
+    ignore:
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]

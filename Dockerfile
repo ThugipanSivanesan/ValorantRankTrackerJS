@@ -1,5 +1,5 @@
-# Node 18 is EOL — use an active LTS.
-FROM node:26-alpine
+# Node 18 is EOL — pin to the current Active LTS line (24.x).
+FROM node:24-alpine
 
 WORKDIR /ValorantRankTrackerJS
 
