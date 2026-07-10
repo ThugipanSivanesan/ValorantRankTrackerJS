@@ -1,5 +1,5 @@
 # Node 18 is EOL — use an active LTS.
-FROM node:22-alpine
+FROM node:26-alpine
 
 WORKDIR /ValorantRankTrackerJS
 
