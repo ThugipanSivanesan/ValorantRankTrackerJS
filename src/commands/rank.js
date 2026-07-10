@@ -14,29 +14,30 @@ module.exports = {
         try {
             await interaction.deferReply({ ephemeral: true });
             const nameTagLocation = interaction.options.getString('input');
-            const splitNameTagLocation = nameTagLocation.split('#');
-            const api = await request(`https://api.henrikdev.xyz/valorant/v1/mmr-history/${splitNameTagLocation[2]}/${splitNameTagLocation[0]}/${splitNameTagLocation[1]}`);
+            const [name, tag, region] = nameTagLocation.split('#').map(part => part?.trim());
+
+            if (!name || !tag || !region) {
+                throw new SyntaxError('Invalid input. Use the format `name#tag#region`, e.g. `myname#1234#eu`.');
+            }
+
+            const api = await request(
+                `https://api.henrikdev.xyz/valorant/v1/mmr-history/${encodeURIComponent(region)}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`
+            );
             const jsonResult = await api.body.json();
 
-            if (api.statusCode != 200) throw new SyntaxError(jsonResult.errors[0].message);
+            if (api.statusCode !== 200) throw new SyntaxError(jsonResult.errors?.[0]?.message ?? 'Request failed.');
 
-            const parsedResult = new Map([
-                ['Name', jsonResult.name],
-                ['Tag', jsonResult.tag],
-                ['Current Rank', jsonResult.data[0].currenttierpatched],
-                ['RR won/lost', jsonResult.data[0].mmr_change_to_last_game],
-                ['RR', jsonResult.data[0].elo],
-                ['Date', jsonResult.data[0].date],
-            ]);
+            const latest = jsonResult.data?.[0];
+            if (!latest) throw new SyntaxError('No competitive match history found for this player.');
 
             await interaction.editReply({
                 content:
-                    'Name: ' + parsedResult.get('Name') + '\n' +
-                    'Tag: ' + parsedResult.get('Tag') + '\n' +
-                    'Current Rank: ' + parsedResult.get('Current Rank') + '\n' +
-                    'RR won/lost: ' + parsedResult.get('RR won/lost') + '\n' +
-                    'Current RR: ' + parsedResult.get('RR') + '\n' +
-                    'Date: ' + parsedResult.get('Date') + '\n'
+                    `Name: ${jsonResult.name}\n` +
+                    `Tag: ${jsonResult.tag}\n` +
+                    `Current Rank: ${latest.currenttierpatched}\n` +
+                    `RR won/lost: ${latest.mmr_change_to_last_game}\n` +
+                    `Current RR: ${latest.elo}\n` +
+                    `Date: ${latest.date}\n`
             });
         } catch (e) {
             if (e instanceof SyntaxError) {

@@ -1,1 +1,10 @@
 node_modules
+config.json
+.git
+.gitignore
+logs
+*.log
+Dockerfile
+.dockerignore
+README.md
+LICENSE

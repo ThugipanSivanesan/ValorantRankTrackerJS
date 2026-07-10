@@ -9,6 +9,7 @@ const {
 } = require('discord.js');
 
 const { token } = require('../config.json');
+const { dashLogger } = require('./logger');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -50,8 +51,12 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-		dashLogger.error(`Error : ${e.message}`);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		dashLogger.error(`Error : ${error.message}`);
+		if (interaction.deferred || interaction.replied) {
+			await interaction.editReply({ content: 'There was an error while executing this command!' });
+		} else {
+			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		}
 	}
 });
 

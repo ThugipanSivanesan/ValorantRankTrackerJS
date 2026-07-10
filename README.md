@@ -48,7 +48,7 @@ The bot needs a `config.json` file. Create one in the root folder in this format
 
 # <a name="node"></a> Node
 
-**Make sure you have Node installed!**
+**Make sure you have Node.js 20 or newer installed!**
 
 Install packages
 
@@ -56,16 +56,10 @@ Install packages
 npm install
 ```
 
-Go into the `src`-folder
-
-```bash
-cd src
-```
-
 Deploy commands to your Discord server
 
 ```bash
-node deploy-commands.js
+npm run deploy
 ```
 
 **Keep in mind that every new command you add, must be deployed to your server!**
@@ -73,23 +67,33 @@ node deploy-commands.js
 Run the bot
 
 ```bash
-node index.js
+npm start
 ```
 <br></br>
 # <a name="docker"></a> Docker
 
 **Make sure you have Docker installed!**
 
-Build the Docker-file inside the root folder
+`config.json` is intentionally **not** copied into the image (it's excluded via `.dockerignore`) so your bot token never ends up baked into an image layer. Instead, mount it at runtime.
+
+Build the image inside the root folder
 
 ```bash
 docker build -t valorantranktrackerjs .
 ```
 
-Run the Docker-file
+Run the container, mounting your `config.json` read-only
 
 ```bash
-docker run -d -t --name valorantranktracker valorantranktrackerjs
+docker run -d --name valorantranktracker \
+  -v "$(pwd)/config.json:/ValorantRankTrackerJS/config.json:ro" \
+  valorantranktrackerjs
+```
+
+Deploy your commands once (after the container is running with `config.json` mounted)
+
+```bash
+docker exec valorantranktracker node deploy-commands.js
 ```
 
 If Docker gives you a permission error, then run the instructions above with the `sudo` keyword.
