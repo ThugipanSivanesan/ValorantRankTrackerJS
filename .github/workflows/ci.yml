@@ -1,0 +1,58 @@
+name: CI
+
+# This repo commits directly to master (no PR flow), so scans run on push as
+# well as on any PR, plus a weekly cron so newly-disclosed CVEs against an
+# unchanged lockfile still get caught. workflow_dispatch allows manual runs.
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+
+  gitleaks:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks # CLI binary, not the action (no GitHub API → works on forks)
+        run: |
+          V=8.24.3
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${V}/gitleaks_${V}_linux_x64.tar.gz" -o gl.tgz
+          tar -xzf gl.tgz gitleaks && sudo install gitleaks /usr/local/bin/gitleaks
+      - run: gitleaks detect --source . --redact --no-banner --exit-code 1
+
+  osv-scan:
+    name: Dependency vuln scan (osv-scanner)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Install osv-scanner
+        run: |
+          V=2.4.0
+          curl -sSfL "https://github.com/google/osv-scanner/releases/download/v${V}/osv-scanner_linux_amd64" -o osv-scanner
+          sudo install osv-scanner /usr/local/bin/osv-scanner
+      - run: osv-scanner --lockfile=package-lock.json

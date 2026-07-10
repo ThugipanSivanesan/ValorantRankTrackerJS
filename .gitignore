@@ -1,2 +1,13 @@
 node_modules
+
+# Secrets — never commit these
 config.json
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Runtime output
+logs/
+*.log
